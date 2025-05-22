@@ -33,7 +33,6 @@ describe("POST /api/auth/login", () => {
     expect(response.body.user.email).toBe(TEST_EMAIL);
     expect(response.body.user.name).toBe("John Doe");
 
-    // Check if cookies are set
     const cookies = response.headers["set-cookie"] as unknown as string[];
     expect(cookies).toBeDefined();
     expect(cookies.some((cookie) => cookie.startsWith("accessToken="))).toBe(

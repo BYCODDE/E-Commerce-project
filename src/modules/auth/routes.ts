@@ -89,4 +89,3 @@ router.get(
 export default router;
 
 
-// TODO: bolo 3-ze mchirdeba test-is dawera.
