@@ -5,6 +5,7 @@ import { registerSchema } from "./schemas/register";
 import { serviceWrapper } from "@/utils/serviceWrapper";
 import { loginSchema } from "./schemas/login";
 import { login } from "./services/login";
+import { requireAuth } from "@/middlewares/requireAuth";
 
 const router = Router();
 
@@ -32,6 +33,14 @@ router.post(
         maxAge: 7 * 24 * 60 * 60 * 1000,
       })
       .json({ message: "Login  successful", user });
+  })
+);
+
+router.get(
+  "/me",
+  requireAuth,
+  serviceWrapper(async (req: Request, res: Response) => {
+    res.json(req.user);
   })
 );
 
