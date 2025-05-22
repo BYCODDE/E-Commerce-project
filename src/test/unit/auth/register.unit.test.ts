@@ -11,19 +11,17 @@ afterAll(async () => {
   await clearTestUser(TEST_EMAIL);
 });
 
-describe("Register", () => {
-  it("should register a user", async () => {
-    const result = await register({
-      name: "John Doe",
-      email: TEST_EMAIL,
-      age: 20,
-      phone: "+1234567890",
-      password: "password",
-    });
-    expect(result.message).toBe("User registered successfully");
-    expect(result.user.email).toBe(TEST_EMAIL);
-    expect(result.user.name).toBe("John Doe");
-    expect(result.user.age).toBe(20);
-    expect(result.user.phone).toBe("+1234567890");
+it("should register a user", async () => {
+  const result = await register({
+    name: "John Doe",
+    email: TEST_EMAIL,
+    age: 20,
+    phone: "+1234567890",
+    password: "password",
   });
+  expect(result.message).toBe("User registered successfully");
+  expect(result.user.email).toBe(TEST_EMAIL);
+  expect(result.user.name).toBe("John Doe");
+  expect(result.user.age).toBe(20);
+  expect(result.user.phone).toBe("+1234567890");
 });
