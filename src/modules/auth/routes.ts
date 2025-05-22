@@ -6,6 +6,9 @@ import { serviceWrapper } from "@/utils/serviceWrapper";
 import { loginSchema } from "./schemas/login";
 import { login } from "./services/login";
 import { requireAuth } from "@/middlewares/requireAuth";
+import { refreshTokens } from "@/db/schema";
+import { refreshTokenService } from "./services/refresh";
+import { logout } from "./services/logout";
 
 const router = Router();
 
@@ -44,4 +47,46 @@ router.get(
   })
 );
 
+router.get(
+  "/refresh",
+  serviceWrapper(async (req: Request, res: Response) => {
+    const token = req.cookies.refreshToken;
+
+    if (!token) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+
+    const { accessToken, refreshToken } = await refreshTokenService(token);
+    res
+      .cookie("accessToken", accessToken, {
+        httpOnly: true,
+        maxAge: 15 * 60 * 1000,
+      })
+      .cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      })
+      .json({ message: "Token refreshed" });
+  })
+);
+
+router.get(
+  "/logout",
+  requireAuth,
+  serviceWrapper(async (req: Request, res: Response) => {
+    const token = req.cookies.refreshToken;
+    await logout(token);
+
+    res
+      .clearCookie("accessToken", { httpOnly: true })
+      .clearCookie("refreshToken", { httpOnly: true })
+      .status(200)
+      .json({ message: "Logout successful" });
+  })
+);
+
 export default router;
+
+
+// TODO: bolo 3-ze mchirdeba test-is dawera.
