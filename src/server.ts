@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 import authRoutes from "@/modules/auth/routes";
+
 const swaggerDocument = YAML.load("./swagger/swagger.yaml");
 
 const app = express();

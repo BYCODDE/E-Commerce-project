@@ -6,7 +6,6 @@ import { serviceWrapper } from "@/utils/serviceWrapper";
 import { loginSchema } from "./schemas/login";
 import { login } from "./services/login";
 import { requireAuth } from "@/middlewares/requireAuth";
-import { refreshTokens } from "@/db/schema";
 import { refreshTokenService } from "./services/refresh";
 import { logout } from "./services/logout";
 
@@ -87,5 +86,3 @@ router.get(
 );
 
 export default router;
-
-
