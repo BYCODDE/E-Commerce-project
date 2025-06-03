@@ -1,5 +1,4 @@
-import {RequestHandler, NextFunction, Request, Response } from "express";
-
+import { RequestHandler, NextFunction, Request, Response } from "express";
 
 export const serviceWrapper = (service: RequestHandler) => {
   return async (req: Request, res: Response, next: NextFunction) => {

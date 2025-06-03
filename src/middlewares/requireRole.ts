@@ -48,7 +48,7 @@ export function requireRole(...roles: ("ADMIN" | "USER" | "COURIER")[]) {
       res
         .status(401)
         .json({ message: "Unauthorized: invalid or expired token" });
-      return; 
+      return;
     }
   };
 }

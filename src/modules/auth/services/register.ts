@@ -21,6 +21,7 @@ export async function register(data: RegisterInput) {
       name: data.name,
       age: data.age,
       phone: data.phone,
+      role: "ADMIN",
     })
     .returning();
 

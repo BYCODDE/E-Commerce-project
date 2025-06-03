@@ -7,6 +7,14 @@ type ValidateOptions = {
   params?: ZodTypeAny;
 };
 
+declare global {
+  namespace Express {
+    interface Request {
+      validatedQuery: any;
+    }
+  }
+}
+
 export function validateRequest(schema: ValidateOptions) {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -14,7 +22,7 @@ export function validateRequest(schema: ValidateOptions) {
         req.body = schema.body.parse(req.body);
       }
       if (schema.query) {
-        req.query = schema.query.parse(req.query);
+        req.validatedQuery = schema.query.parse(req.query);
       }
       if (schema.params) {
         req.params = schema.params.parse(req.params);
@@ -28,8 +36,9 @@ export function validateRequest(schema: ValidateOptions) {
             path: err.path.join("."),
           })),
         });
+        return;
       }
       next(error);
     }
-  };  
+  };
 }
